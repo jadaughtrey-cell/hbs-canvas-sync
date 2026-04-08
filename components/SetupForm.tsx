@@ -7,9 +7,6 @@ interface Props {
   loading: boolean;
 }
 
-function todayStr() {
-  return new Date().toISOString().split("T")[0];
-}
 function mondayStr() {
   const d = new Date();
   const day = d.getDay();
@@ -36,11 +33,9 @@ export default function SetupForm({ onFetch, loading }: Props) {
     if (!token.trim()) return "Canvas API token is required.";
     const start = new Date(startDate);
     const end   = new Date(endDate);
-    const today = new Date();
     if (start > end) return "Start date must be before end date.";
     const days = Math.round((end.getTime() - start.getTime()) / 86400000) + 1;
-    if (days > 5) return `Range is ${days} days — max is 5.`;
-    if (start > today) return "Start date cannot be in the future.";
+    if (days > 14) return `Range is ${days} days — max is 14.`;
     return "";
   }
 
@@ -100,19 +95,17 @@ export default function SetupForm({ onFetch, loading }: Props) {
             <input
               type="date"
               value={startDate}
-              max={todayStr()}
               onChange={(e) => setStartDate(e.target.value)}
               className="w-full px-3 py-2 text-sm border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#A41034]/30 focus:border-[#A41034]"
             />
           </div>
           <div>
             <label className="block text-sm font-medium text-gray-600 mb-1.5">
-              End Date <span className="text-gray-400 font-normal">(max 5 days)</span>
+              End Date <span className="text-gray-400 font-normal">(max 14 days)</span>
             </label>
             <input
               type="date"
               value={endDate}
-              max={todayStr()}
               onChange={(e) => setEndDate(e.target.value)}
               className="w-full px-3 py-2 text-sm border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#A41034]/30 focus:border-[#A41034]"
             />
