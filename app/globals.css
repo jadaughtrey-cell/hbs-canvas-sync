@@ -1,0 +1,13 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --hbs-crimson: #A41034;
+  --hbs-dark: #1a1a2e;
+}
+
+body {
+  background-color: #f8f8f8;
+  color: #1a1a1a;
+}
