@@ -56,51 +56,62 @@ export async function POST(req: NextRequest) {
     }
 
     const headers = { Authorization: `Bearer ${token}` };
-    const courseIds = Object.keys(HBS_COURSES).map(Number);
+
+    // Fetch all courses the user is actively enrolled in
+    const coursesRes = await fetch(
+      `${CANVAS_BASE}/courses?enrollment_type=student&enrollment_state=active&per_page=50`,
+      { headers }
+    );
+    if (!coursesRes.ok) {
+      return NextResponse.json(
+        { error: "Could not fetch your Canvas courses. Check your token and try again." },
+        { status: 401 }
+      );
+    }
+    const courses = await coursesRes.json();
+    if (!Array.isArray(courses)) {
+      return NextResponse.json(
+        { error: "Unexpected response from Canvas. Check your token." },
+        { status: 400 }
+      );
+    }
 
     const allAssignments: CanvasAssignment[] = [];
+    const startTs = new Date(startDate + "T00:00:00").getTime();
+    const endTs   = new Date(endDate   + "T23:59:59").getTime();
 
-    // Fetch assignments for each HBS course in parallel
+    // Fetch assignments for every enrolled course in parallel
     await Promise.all(
-      courseIds.map(async (courseId) => {
+      courses.map(async (course: Record<string, unknown>) => {
         try {
-          // Get course info
-          const courseRes = await fetch(`${CANVAS_BASE}/courses/${courseId}`, { headers });
-          if (!courseRes.ok) return; // skip courses user can't access
+          const courseId   = course.id as number;
+          const courseName = (course.name as string) || `Course ${courseId}`;
 
-          const course = await courseRes.json();
-
-          // Fetch assignments due in the date range
-          const params = new URLSearchParams({
-            "bucket": "due_after",
-            "per_page": "50",
-          });
+          // Use our known short code if available, otherwise derive from Canvas course_code
+          const canvasCode = ((course.course_code as string) || "")
+            .split(/[\s_]/)[0]
+            .toUpperCase();
+          const courseCode = HBS_COURSES[courseId] || canvasCode || "COURSE";
 
           const assignRes = await fetch(
-            `${CANVAS_BASE}/courses/${courseId}/assignments?${params}`,
+            `${CANVAS_BASE}/courses/${courseId}/assignments?per_page=50`,
             { headers }
           );
           if (!assignRes.ok) return;
 
           const assignments = await assignRes.json();
-
-          // Filter by due date within range
-          const startTs = new Date(startDate + "T00:00:00").getTime();
-          const endTs   = new Date(endDate   + "T23:59:59").getTime();
+          if (!Array.isArray(assignments)) return;
 
           for (const a of assignments) {
             if (!a.due_at) continue;
             const dueTs = new Date(a.due_at).getTime();
-
-            // Include assignments due in range OR due just before (same-day prep)
-            // We use a 2-day lookback so assignments due Monday show on Sunday prep
-            if (dueTs >= startTs - 2 * 86400000 && dueTs <= endTs + 86400000) {
+            if (dueTs >= startTs && dueTs <= endTs) {
               allAssignments.push({
                 id:          a.id,
                 name:        a.name,
                 course_id:   courseId,
-                course_name: course.name || `Course ${courseId}`,
-                course_code: HBS_COURSES[courseId] || "OTHER",
+                course_name: courseName,
+                course_code: courseCode,
                 due_at:      a.due_at,
                 description: a.description || null,
                 questions:   extractQuestions(a.description),
@@ -109,7 +120,7 @@ export async function POST(req: NextRequest) {
             }
           }
         } catch {
-          // Skip courses that error — don't fail the whole request
+          // Skip any course that errors — don't fail the whole request
         }
       })
     );
