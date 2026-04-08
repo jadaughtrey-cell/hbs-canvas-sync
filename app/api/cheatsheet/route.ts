@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import {
   Document, Packer, Paragraph, TextRun, Table, TableRow, TableCell,
-  WidthType, ShadingType, AlignmentType, BorderStyle, HeadingLevel,
+  WidthType, ShadingType, BorderStyle, HeadingLevel,
 } from "docx";
 import type { CanvasAssignment } from "@/lib/types";
 import { COURSE_COLORS } from "@/lib/types";
