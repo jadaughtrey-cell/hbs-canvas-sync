@@ -75,9 +75,9 @@ export async function POST(req: NextRequest) {
     // Always return debug info so we can see what each endpoint returned
     const debug = {
       usedEndpoint,
-      endpoint1: { status: res1.status, count: Array.isArray(body1) ? body1.length : "not array", sample: Array.isArray(body1) ? JSON.stringify(body1[0]).slice(0, 200) : JSON.stringify(body1).slice(0, 200) },
+      endpoint1: { status: res1.status, count: Array.isArray(body1) ? body1.length : "not array", sample: Array.isArray(body1) ? (body1[0] ? JSON.stringify(body1[0]).slice(0, 200) : "[]") : String(body1).slice(0, 200) },
       endpoint2: { status: res2.status, count: Array.isArray(body2) ? body2.length : "not array" },
-      endpoint3: { status: res3.status, count: Array.isArray(body3) ? body3.length : "not array", sample: Array.isArray(body3) ? JSON.stringify(body3[0]).slice(0, 200) : JSON.stringify(body3).slice(0, 200) },
+      endpoint3: { status: res3.status, count: Array.isArray(body3) ? body3.length : "not array", sample: Array.isArray(body3) ? (body3[0] ? JSON.stringify(body3[0]).slice(0, 200) : "[]") : String(body3).slice(0, 200) },
     };
 
     if (courses.length === 0) {
