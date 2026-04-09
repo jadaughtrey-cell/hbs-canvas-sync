@@ -108,7 +108,16 @@ export async function POST(req: NextRequest) {
       matchedRange: allAssignments.length,
     };
 
-    return NextResponse.json({ assignments: allAssignments, _debug });
+    if (allAssignments.length === 0) {
+      const upcomingStr = _debug.nearestUpcoming && (_debug.nearestUpcoming as {name:string;due_at:string}[]).length > 0
+        ? (_debug.nearestUpcoming as {name:string;due_at:string}[]).map(a => `${a.name} (due ${new Date(a.due_at).toLocaleDateString()})`).join(", ")
+        : "none found";
+      return NextResponse.json({
+        error: `No assignments due ${startDate} – ${endDate}. Canvas returned: ${_debug.courseCount} courses, ${_debug.totalAssignmentsFound} total assignments, ${_debug.assignmentsWithDueDate} with a due date. Next upcoming: ${upcomingStr}`,
+        assignments: [],
+      }, { status: 200 });
+    }
+    return NextResponse.json({ assignments: allAssignments });
   } catch (e: unknown) {
     return NextResponse.json({ error: String(e) }, { status: 500 });
   }
