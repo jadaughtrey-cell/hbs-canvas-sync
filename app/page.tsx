@@ -6,16 +6,17 @@ import AssignmentList from "@/components/AssignmentList";
 import type { CanvasAssignment } from "@/lib/types";
 
 const LOADING_STEPS = [
-  "Connecting to Canvas…",
-  "Authenticating token…",
-  "Loading your courses…",
-  "Scanning assignments…",
-  "Filtering by date range…",
-  "Almost there…",
+  "Connecting to Canvasâ¦",
+  "Authenticating tokenâ¦",
+  "Loading your coursesâ¦",
+  "Scanning assignmentsâ¦",
+  "Filtering by date rangeâ¦",
+  "Almost thereâ¦",
 ];
 
 export default function Home() {
   const [assignments, setAssignments] = useState<CanvasAssignment[] | null>(null);
+  const [debugInfo, setDebugInfo] = useState<Record<string, unknown> | null>(null);
   const [token, setToken] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
@@ -39,6 +40,7 @@ export default function Home() {
   async function handleFetch(canvasToken: string, startDate: string, endDate: string) {
     setLoading(true);
     setAssignments(null);
+    setDebugInfo(null);
     setError("");
     setToken(canvasToken);
     try {
@@ -50,6 +52,7 @@ export default function Home() {
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || "Failed to fetch assignments");
       setAssignments(data.assignments);
+      if (data._debug) setDebugInfo(data._debug);
     } catch (e: unknown) {
       setError(e instanceof Error ? e.message : "Something went wrong");
     } finally {
@@ -66,7 +69,7 @@ export default function Home() {
         <div className="max-w-5xl mx-auto px-6 py-4 flex items-center gap-4">
           <div className="text-2xl font-bold tracking-tight">HBS Canvas Sync</div>
           <div className="text-sm text-red-200 mt-0.5">
-            Canvas → Outlook · Cheat Sheets · OneDrive
+            Canvas â Outlook Â· Cheat Sheets Â· OneDrive
           </div>
         </div>
       </header>
@@ -80,7 +83,7 @@ export default function Home() {
             </h1>
             <p className="text-gray-500 text-sm leading-relaxed max-w-2xl">
               Connect your HBS Canvas account to automatically pull assignment questions,
-              required readings, and case summaries for a selected week — then generate
+              required readings, and case summaries for a selected week â then generate
               formatted cheat sheets and push everything to your Outlook calendar and OneDrive.
             </p>
             <div className="mt-6 flex gap-4 text-sm text-gray-400">
@@ -148,6 +151,25 @@ export default function Home() {
           </div>
         )}
 
+        {/* Debug panel — shown when no assignments found */}
+        {assignments && assignments.length === 0 && debugInfo && (
+          <div className="bg-amber-50 border border-amber-200 rounded-lg px-5 py-4 text-xs text-amber-800 space-y-1">
+            <p className="font-semibold">Diagnostic info (no assignments matched your date range):</p>
+            <p>Courses found: {(debugInfo.courseCount as number) || 0}</p>
+            <p>Course names: {(debugInfo.courseNames as string[])?.join(", ") || "none"}</p>
+            <p>Total assignments on Canvas: {debugInfo.totalAssignmentsFound as number}</p>
+            <p>Assignments with a due date: {debugInfo.assignmentsWithDueDate as number}</p>
+            {(debugInfo.nearestUpcoming as {name:string;due_at:string}[])?.length > 0 && (
+              <div>
+                <p className="font-semibold mt-1">Next upcoming assignments:</p>
+                {(debugInfo.nearestUpcoming as {name:string;due_at:string}[]).map((a, i) => (
+                  <p key={i}>• {a.name} — {new Date(a.due_at).toLocaleDateString()}</p>
+                ))}
+              </div>
+            )}
+          </div>
+        )}
+
         {/* Results */}
         {assignments && (
           <AssignmentList assignments={assignments} token={token} />
@@ -155,7 +177,7 @@ export default function Home() {
       </main>
 
       <footer className="text-center text-xs text-gray-400 py-8">
-        HBS Canvas Sync · Built for RC MBA 2026 · DSAIL Final Project
+        HBS Canvas Sync Â· Built for RC MBA 2026 Â· DSAIL Final Project
       </footer>
     </div>
   );
