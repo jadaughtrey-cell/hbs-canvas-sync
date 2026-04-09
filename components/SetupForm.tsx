@@ -1,6 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
+
+const TOKEN_KEY = "hbs_canvas_token";
 
 interface Props {
   onFetch: (token: string, startDate: string, endDate: string) => void;
@@ -28,6 +30,21 @@ export default function SetupForm({ onFetch, loading }: Props) {
   const [endDate, setEndDate] = useState(fridayStr());
   const [showToken, setShowToken] = useState(false);
   const [validationError, setValidationError] = useState("");
+  const [tokenSaved, setTokenSaved] = useState(false);
+
+  // Load saved token on mount
+  useEffect(() => {
+    const saved = localStorage.getItem(TOKEN_KEY);
+    if (saved) {
+      setToken(saved);
+      setTokenSaved(true);
+    }
+  }, []);
+
+  function handleTokenChange(val: string) {
+    setToken(val);
+    setTokenSaved(false);
+  }
 
   function validate() {
     if (!token.trim()) return "Canvas API token is required.";
@@ -44,7 +61,16 @@ export default function SetupForm({ onFetch, loading }: Props) {
     const err = validate();
     if (err) { setValidationError(err); return; }
     setValidationError("");
+    // Save token to localStorage for next visit
+    localStorage.setItem(TOKEN_KEY, token.trim());
+    setTokenSaved(true);
     onFetch(token.trim(), startDate, endDate);
+  }
+
+  function handleClearToken() {
+    localStorage.removeItem(TOKEN_KEY);
+    setToken("");
+    setTokenSaved(false);
   }
 
   return (
@@ -69,7 +95,7 @@ export default function SetupForm({ onFetch, loading }: Props) {
             <input
               type={showToken ? "text" : "password"}
               value={token}
-              onChange={(e) => setToken(e.target.value)}
+              onChange={(e) => handleTokenChange(e.target.value)}
               placeholder="Paste your Canvas API token"
               className="flex-1 px-3 py-2 text-sm border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#A41034]/30 focus:border-[#A41034]"
             />
@@ -81,9 +107,22 @@ export default function SetupForm({ onFetch, loading }: Props) {
               {showToken ? "Hide" : "Show"}
             </button>
           </div>
-          <p className="mt-1 text-xs text-gray-400">
-            Your token is sent directly to Canvas and never stored.
-          </p>
+          <div className="mt-1 flex items-center justify-between">
+            {tokenSaved ? (
+              <p className="text-xs text-green-600">✓ Token saved in your browser</p>
+            ) : (
+              <p className="text-xs text-gray-400">Saved locally in your browser — never sent to any server.</p>
+            )}
+            {tokenSaved && (
+              <button
+                type="button"
+                onClick={handleClearToken}
+                className="text-xs text-gray-400 hover:text-red-500 underline"
+              >
+                Clear saved token
+              </button>
+            )}
+          </div>
         </div>
 
         {/* Date range */}
