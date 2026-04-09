@@ -47,7 +47,7 @@ export async function POST(req: NextRequest) {
 
     // Step 1: get enrolled courses so we can pass explicit context_codes
     const coursesRes = await fetch(
-      `${CANVAS_BASE}/courses?enrollment_type=student&enrollment_state=active&per_page=50`,
+      `${CANVAS_BASE}/courses?enrollment_type=student&per_page=100`,
       { headers }
     );
     if (!coursesRes.ok) {
