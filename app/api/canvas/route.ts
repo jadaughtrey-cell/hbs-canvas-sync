@@ -113,9 +113,9 @@ export async function POST(req: NextRequest) {
         ? (_debug.nearestUpcoming as {name:string;due_at:string}[]).map(a => `${a.name} (due ${new Date(a.due_at).toLocaleDateString()})`).join(", ")
         : "none found";
       return NextResponse.json({
-        error: `No assignments due ${startDate} – ${endDate}. Canvas returned: ${_debug.courseCount} courses, ${_debug.totalAssignmentsFound} total assignments, ${_debug.assignmentsWithDueDate} with a due date. Next upcoming: ${upcomingStr}`,
+        error: `No assignments due ${startDate} â ${endDate}. Canvas returned: ${_debug.courseCount} courses, ${_debug.totalAssignmentsFound} total assignments, ${_debug.assignmentsWithDueDate} with a due date. Next upcoming: ${upcomingStr}`,
         assignments: [],
-      }, { status: 200 });
+      }, { status: 400 });
     }
     return NextResponse.json({ assignments: allAssignments });
   } catch (e: unknown) {
