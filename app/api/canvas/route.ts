@@ -63,8 +63,9 @@ export async function POST(req: NextRequest) {
       { headers }
     );
     if (!coursesRes.ok) {
+      const body = await coursesRes.text().catch(() => "(no body)");
       return NextResponse.json(
-        { error: "Could not fetch your Canvas courses. Check your token and try again." },
+        { error: `Canvas returned HTTP ${coursesRes.status}: ${body.slice(0, 300)}` },
         { status: 401 }
       );
     }
