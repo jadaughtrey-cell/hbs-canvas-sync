@@ -52,7 +52,7 @@ export default function SetupForm({ onFetch, loading }: Props) {
     const end   = new Date(endDate);
     if (start > end) return "Start date must be before end date.";
     const days = Math.round((end.getTime() - start.getTime()) / 86400000) + 1;
-    if (days > 14) return `Range is ${days} days â max is 14.`;
+    if (days > 14) return `Range is ${days} days Ã¢ÂÂ max is 14.`;
     return "";
   }
 
@@ -83,12 +83,12 @@ export default function SetupForm({ onFetch, loading }: Props) {
           <label className="block text-sm font-medium text-gray-600 mb-1.5">
             Canvas API Token
             <a
-              href="https://hbs.instructure.edu/profile/settings"
+              href="https://hbs.instructure.com/profile/settings"
               target="_blank"
               rel="noreferrer"
               className="ml-2 text-xs text-[#A41034] underline font-normal"
             >
-              Get token â
+              Get token Ã¢ÂÂ
             </a>
           </label>
           <div className="flex gap-2">
@@ -109,9 +109,9 @@ export default function SetupForm({ onFetch, loading }: Props) {
           </div>
           <div className="mt-1 flex items-center justify-between">
             {tokenSaved ? (
-              <p className="text-xs text-green-600">â Token saved in your browser</p>
+              <p className="text-xs text-green-600">Ã¢ÂÂ Token saved in your browser</p>
             ) : (
-              <p className="text-xs text-gray-400">Saved locally in your browser â never sent to any server.</p>
+              <p className="text-xs text-gray-400">Saved locally in your browser Ã¢ÂÂ never sent to any server.</p>
             )}
             {tokenSaved && (
               <button
@@ -160,7 +160,7 @@ export default function SetupForm({ onFetch, loading }: Props) {
           disabled={loading}
           className="w-full bg-[#A41034] text-white py-2.5 rounded-lg text-sm font-medium hover:bg-[#8a0d2b] transition disabled:opacity-50 disabled:cursor-not-allowed"
         >
-          {loading ? "Fetching assignmentsâ¦" : "Fetch Assignments"}
+          {loading ? "Fetching assignmentsÃ¢ÂÂ¦" : "Fetch Assignments"}
         </button>
       </form>
     </div>
