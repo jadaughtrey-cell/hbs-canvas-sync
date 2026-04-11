@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { validateDateRange } from "@/lib/dateValidation";
 import { HBS_COURSES, type CanvasAssignment } from "@/lib/types";
 
-const CANVAS_BASE = "https://canvas.harvard.edu/api/v1";
+const CANVAS_BASE = "https://hbs.instructure.edu/api/v1";
 
 function stripHtml(html: string): string {
   return html
@@ -113,7 +113,7 @@ export async function POST(req: NextRequest) {
         ? (_debug.nearestUpcoming as {name:string;due_at:string}[]).map(a => `${a.name} (due ${new Date(a.due_at).toLocaleDateString()})`).join(", ")
         : "none found";
       return NextResponse.json({
-        error: `No assignments due ${startDate} â ${endDate}. Canvas returned: ${_debug.courseCount} courses, ${_debug.totalAssignmentsFound} total assignments, ${_debug.assignmentsWithDueDate} with a due date. Next upcoming: ${upcomingStr}`,
+        error: `No assignments due ${startDate} Ã¢ÂÂ ${endDate}. Canvas returned: ${_debug.courseCount} courses, ${_debug.totalAssignmentsFound} total assignments, ${_debug.assignmentsWithDueDate} with a due date. Next upcoming: ${upcomingStr}`,
         assignments: [],
       }, { status: 400 });
     }
