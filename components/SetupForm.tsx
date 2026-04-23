@@ -34,7 +34,6 @@ export default function SetupForm({ onFetch, loading }: Props) {
 
   function handleTokenChange(val: string) { setToken(val); setTokenSaved(false); }
   function validate() {
-    if (!canvasUrl.trim()) return "Canvas URL is required (e.g. hbs.instructure.com).";
     if (!token.trim())     return "Canvas API token is required.";
     const start = new Date(startDate); const end = new Date(endDate);
     if (start > end) return "Start date must be before end date.";
