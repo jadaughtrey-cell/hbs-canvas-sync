@@ -78,6 +78,27 @@ export default function Home() {
     }
   }
 
+
+  async function handleRunSelected() {
+    if (!assignments || !prefs.cheatSheet) return;
+    for (const assignment of assignments) {
+      try {
+        const res = await fetch('/api/cheatsheet', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ assignment, token }),
+        });
+        if (!res.ok) continue;
+        const blob = await res.blob();
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url; a.download = assignment.course_code + ' - ' + assignment.name + '.docx';
+        a.click(); URL.revokeObjectURL(url);
+        await new Promise(r => setTimeout(r, 600));
+      } catch (e) { console.error('Cheatsheet failed for', assignment.name, e); }
+    }
+  }
+
   const progressPct = ((stepIndex + 1) / LOADING_STEPS.length) * 100;
 
   return (
@@ -143,8 +164,8 @@ export default function Home() {
             <div className="space-y-3 mb-5">
               {([
                 { key: "cheatSheet", label: "Generate AI case analyses (.docx)", sub: "AI writes 2–4 page answers using case PDFs and questions", ready: true },
-                { key: "outlook",    label: "Add due dates to Outlook calendar",  sub: "Create calendar events for each assignment",              ready: false },
-                { key: "onedrive",   label: "Save cheat sheets to OneDrive",       sub: "Upload generated .docx files to a OneDrive folder",       ready: false },
+                { key: "outlook",    label: "Outlook Calendar Sync",  sub: "⛔ Blocked — HBS IT has not granted Calendars.ReadWrite access. Requires admin authorization.",  ready: false },
+                { key: "onedrive",   label: "OneDrive Upload",  sub: "⛔ HBS OneDrive blocked (same tenant). Personal OneDrive possible but OAuth not yet built.",  ready: false },
               ] as const).map(({ key, label, sub, ready }) => (
                 <label key={key} className={`flex items-start gap-3 p-3 rounded-lg border cursor-pointer transition ${prefs[key] ? "border-[#A41034]/30 bg-red-50/40" : "border-gray-100 hover:bg-gray-50"}`}>
                   <input type="checkbox" checked={prefs[key]} onChange={e => savePrefs({ ...prefs, [key]: e.target.checked })}
@@ -152,7 +173,7 @@ export default function Home() {
                   <div className="flex-1">
                     <div className="flex items-center gap-2">
                       <span className="text-sm font-medium text-gray-700">{label}</span>
-                      {!ready && <span className="text-xs text-amber-600 bg-amber-50 border border-amber-200 px-1.5 py-0.5 rounded">Coming soon</span>}
+                      {!ready && <span className="text-xs text-red-600 bg-red-50 border border-red-200 px-1.5 py-0.5 rounded">Blocked</span>}
                     </div>
                     <p className="text-xs text-gray-400 mt-0.5">{sub}</p>
                   </div>
@@ -167,7 +188,7 @@ export default function Home() {
                 Run automatically every time I fetch
               </label>
               <button
-                onClick={() => alert("Case analysis generation coming in next update!")}
+                onClick={handleRunSelected}
                 className="bg-[#A41034] text-white px-5 py-2 rounded-lg text-sm font-medium hover:bg-[#8a0d2b] transition">
                 Run Selected
               </button>
