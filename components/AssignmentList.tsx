@@ -1,133 +1,96 @@
 "use client";
 
-import { useState } from "react";
 import type { CanvasAssignment } from "@/lib/types";
 import { COURSE_COLORS } from "@/lib/types";
 
 interface Props {
   assignments: CanvasAssignment[];
-  token: string;
 }
 
 function formatDate(iso: string | null) {
   if (!iso) return "No due date";
-  const d = new Date(iso);
-  return d.toLocaleDateString("en-US", {
+  return new Date(iso).toLocaleDateString("en-US", {
     weekday: "short", month: "short", day: "numeric",
     hour: "numeric", minute: "2-digit",
   });
 }
 
-export default function AssignmentList({ assignments, token }: Props) {
-  const [downloading, setDownloading] = useState<number | null>(null);
-  const [downloaded, setDownloaded] = useState<Set<number>>(new Set());
+function stripHtml(html: string | null): string {
+  if (!html) return "";
+  return html
+    .replace(/<br\s*\/?>/gi, "\n").replace(/<\/p>/gi, "\n").replace(/<\/li>/gi, "\n")
+    .replace(/<[^>]+>/g, "").replace(/&nbsp;/g, " ").replace(/&amp;/g, "&")
+    .replace(/\s{3,}/g, "\n\n").trim();
+}
 
+function extractQuestions(html: string | null): string[] {
+  if (!html) return [];
+  const text = stripHtml(html);
+  const lines = text.split("\n").map(l => l.trim()).filter(l => l.length > 10);
+  const q = lines.filter(l => l.match(/^\d+[\.\)]/) || l.endsWith("?") || l.match(/^Q\d+:/i));
+  return q.length > 0 ? q.slice(0, 5) : [];
+}
+
+export default function AssignmentList({ assignments }: Props) {
   if (assignments.length === 0) {
     return (
-      <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-8 text-center text-gray-400 text-sm">
+      <div className="rounded-xl border border-white/10 p-8 text-center text-[#8892a4] text-sm bg-[#1a2236]">
         No assignments found in this date range. Try expanding the window or check your Canvas token.
       </div>
     );
   }
 
-  async function handleCheatSheet(assignment: CanvasAssignment) {
-    setDownloading(assignment.id);
-    try {
-      const res = await fetch("/api/cheatsheet", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ assignment, token }),
-      });
-      if (!res.ok) throw new Error("Failed to generate cheat sheet");
-
-      const blob = await res.blob();
-      const url  = URL.createObjectURL(blob);
-      const a    = document.createElement("a");
-      a.href     = url;
-      a.download = `${assignment.course_code} - ${assignment.name}.docx`;
-      a.click();
-      URL.revokeObjectURL(url);
-      setDownloaded((prev) => new Set(prev).add(assignment.id));
-    } catch (e) {
-      console.error(e);
-      alert("Failed to generate cheat sheet. Please try again.");
-    } finally {
-      setDownloading(null);
-    }
-  }
-
   return (
-    <div className="space-y-4">
-      <div className="flex items-center justify-between">
-        <h2 className="text-base font-semibold text-gray-700">
-          {assignments.length} Assignment{assignments.length !== 1 ? "s" : ""} Found
-        </h2>
-        <span className="text-xs text-gray-400">Click any card to generate a cheat sheet</span>
-      </div>
-
+    <div className="space-y-3">
+      <p className="text-xs text-[#8892a4] font-medium uppercase tracking-wide">
+        {assignments.length} assignment{assignments.length !== 1 ? "s" : ""} found
+        &nbsp;·&nbsp; click any card to open in Canvas
+      </p>
       {assignments.map((a) => {
-        const color = COURSE_COLORS[a.course_code] || COURSE_COLORS.OTHER;
-        const isLoading   = downloading === a.id;
-        const isDone      = downloaded.has(a.id);
-
+        const accent = COURSE_COLORS[a.course_code] ?? "#555555";
+        const questions = extractQuestions(a.description ?? null);
         return (
           <div
             key={a.id}
-            className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden"
+            style={{ borderLeft: `3px solid ${accent}` }}
+            className="bg-[#1a2236] border border-white/10 rounded-xl p-4 hover:border-white/20 transition-colors"
           >
-            {/* Color bar + header */}
-            <div
-              className="px-5 py-3 flex items-center justify-between"
-              style={{ backgroundColor: color }}
-            >
-              <div className="flex items-center gap-3">
-                <span className="text-white font-bold text-sm tracking-wide">
-                  {a.course_code}
-                </span>
-                <span className="text-white/70 text-sm">{a.course_name}</span>
-              </div>
-              <span className="text-white/70 text-xs">{formatDate(a.due_at)}</span>
-            </div>
-
-            {/* Body */}
-            <div className="px-5 py-4">
-              <h3 className="font-semibold text-gray-800 text-sm mb-3">{a.name}</h3>
-
-              {/* Questions */}
-              {a.questions.length > 0 && (
-                <div className="mb-4">
-                  <p className="text-xs font-medium text-gray-500 uppercase tracking-wide mb-2">
-                    Assignment Questions
-                  </p>
-                  <ul className="space-y-1">
-                    {a.questions.map((q, i) => (
-                      <li key={i} className="text-sm text-gray-600 flex gap-2">
-                        <span className="text-gray-300 shrink-0">Q{i + 1}</span>
-                        <span>{q}</span>
-                      </li>
-                    ))}
-                  </ul>
+            <div className="flex items-start gap-3">
+              <span
+                className="text-[11px] font-black tracking-wider px-2 py-0.5 rounded flex-shrink-0 mt-0.5"
+                style={{ background: accent + "22", color: accent }}
+              >
+                {a.course_code}
+              </span>
+              <div className="flex-1 min-w-0">
+                <div className="flex items-start justify-between gap-2">
+                  <p className="text-sm font-semibold text-[#e8eaf0] leading-snug">{a.name}</p>
+                  {a.html_url && (
+                    <a
+                      href={a.html_url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-[11px] text-[#4f8ef7] hover:underline flex-shrink-0"
+                    >
+                      Canvas ↗
+                    </a>
+                  )}
                 </div>
-              )}
-
-              {/* Actions */}
-              <div className="flex gap-2 pt-2 border-t border-gray-50">
-                <button
-                  onClick={() => handleCheatSheet(a)}
-                  disabled={isLoading}
-                  className="flex-1 text-sm py-2 rounded-lg font-medium text-white transition disabled:opacity-50"
-                  style={{ backgroundColor: isDone ? "#1A5C4A" : color }}
-                >
-                  {isLoading ? "Generating…" : isDone ? "✓ Downloaded" : "Download Cheat Sheet (.docx)"}
-                </button>
-                <a
-                  href={a.html_url}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="px-4 py-2 text-sm border border-gray-200 rounded-lg text-gray-500 hover:bg-gray-50 transition"
-                >
-                  Canvas ↗
-                </a>
+                <p className="text-xs text-[#8892a4] mt-0.5">
+                  📅 {formatDate(a.due_at)} &nbsp;·&nbsp; {a.course_name}
+                </p>
+                {questions.length > 0 && (
+                  <div className="mt-2.5 space-y-1.5">
+                    <p className="text-[10px] font-bold uppercase tracking-widest text-[#8892a4]">
+                      Discussion Questions
+                    </p>
+                    {questions.map((q, i) => (
+                      <p key={i} className="text-xs text-[#c8d0dc] leading-relaxed pl-2 border-l border-white/10">
+                        {q}
+                      </p>
+                    ))}
+                  </div>
+                )}
               </div>
             </div>
           </div>
