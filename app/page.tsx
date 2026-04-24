@@ -110,7 +110,7 @@ export default function Home() {
       </section>
 
       {/* ── HOW IT WORKS ────────────────────────────────────────────── */}
-      <section id="how-it-works" className="py-16 px-6 bg-[#0d1117] border-t border-white/[.06]">
+      <section id="how-it-works" className="pt-16 bg-[#0d1117] border-t border-white/[.06]">
         <div className="max-w-4xl mx-auto">
           <p className="text-[11px] font-bold tracking-widest uppercase text-[#a41034] mb-2">The Pipeline</p>
           <h2 className="text-2xl font-black tracking-tight mb-2">Four steps, zero manual work.</h2>
@@ -160,11 +160,11 @@ export default function Home() {
           <h2 className="text-2xl font-black tracking-tight mb-2">Before and after, side by side.</h2>
           <p className="text-[#8892a4] text-sm mb-6">Toggle between your raw HBS calendar and what the pipeline produces every Sunday night.</p>
         </div>
-        <div className="mt-6 rounded-2xl overflow-hidden border border-white/[.08] overflow-x-auto" style={{ height: "1900px" }}>
+        <div style={{ height: "1900px", display: "block" }}>
             <iframe
               src="https://jadaughtrey-cell.github.io/hbs-case-prep-site/calendar-before-after.html"
-              style={{ width: "1400px", minWidth: "1400px", height: "100%", border: "none", background: "#0c0c18" }}
-              title="Calendar before and after the pipeline runs"
+              style={{ width: "100%", height: "100%", border: "none", background: "#0c0c18", display: "block" }}
+              scrolling="auto" title="Calendar before and after the pipeline runs"
             />
           </div>
       </section>
