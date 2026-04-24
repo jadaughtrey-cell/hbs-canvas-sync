@@ -164,7 +164,7 @@ export default function Home() {
             <iframe
               src="https://jadaughtrey-cell.github.io/hbs-case-prep-site/calendar-before-after.html"
               style={{ width: "100%", height: "100%", border: "none", background: "#0c0c18", display: "block" }}
-              scrolling="auto" title="Calendar before and after the pipeline runs"
+              title="Calendar before and after the pipeline runs"
             />
           </div>
       </section>
