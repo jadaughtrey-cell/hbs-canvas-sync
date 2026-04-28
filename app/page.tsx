@@ -153,6 +153,24 @@ export default function Home() {
         </div>
       </section>
 
+            {/* — VIDEO DEMO ————————————————————————————— */}
+                  <section id="demo" className="py-16 px-6 bg-[#080b12] border-t border-white/[.06]">
+                          <div className="max-w-4xl mx-auto">
+                                    <p className="text-[11px] font-bold tracking-widest uppercase text-[#a41034] mb-2">Live Demo</p>
+                                              <h2 className="text-2xl font-black tracking-tight mb-2">See it run, start to finish.</h2>
+                                                        <p className="text-[#8892a4] text-sm mb-8">Full pipeline walkthrough recorded live — Canvas scrape through Outlook sync. 14 minutes.</p>
+                                                                  <div style={{ position: "relative", paddingBottom: "56.25%", height: 0, overflow: "hidden", borderRadius: "12px", border: "1px solid rgba(255,255,255,0.08)" }}>
+                                                                              <iframe
+                                                                                            src="https://www.youtube.com/embed/i1S2vfn3hjY"
+                                                                                                          title="HBS Case Prep Pipeline — Full Demo"
+                                                                                                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                                                                                                                      allowFullScreen
+                                                                                                                                                    style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%", border: "none" }}
+                                                                                                                                                                />
+                                                                                                                                                                          </div>
+                                                                                                                                                                                  </div>
+                                                                                                                                                                                        </section>
+                                                                                                                                                                                        
       {/* ── CALENDAR VIZ ────────────────────────────────────────────── */}
       <section id="calendar" className="py-16 px-6 bg-[#0d1117] border-t border-white/[.06]">
         <div className="max-w-4xl mx-auto">
