@@ -1,8 +1,12 @@
 'use client';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 export default function PipelineDiagram() {
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => { setMounted(true); }, []);
+
   useEffect(() => {
+    if (!mounted) return;
     function drawArrow(wrapId: string, svgId: string) {
       const wrap = document.getElementById(wrapId);
       const svg = document.getElementById(svgId) as SVGSVGElement | null;
@@ -39,6 +43,8 @@ export default function PipelineDiagram() {
     drawArrow('pd-flow-built', 'pd-svg-built');
     drawArrow('pd-flow-reality', 'pd-svg-reality');
   }, []);
+
+  if (!mounted) return null;
 
   return (
     <>
