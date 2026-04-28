@@ -161,7 +161,7 @@ export default function Home() {
                                                         <p className="text-[#8892a4] text-sm mb-8">Full pipeline walkthrough recorded live — Canvas scrape through Outlook sync. 14 minutes.</p>
                                                                   <div style={{ position: "relative", paddingBottom: "56.25%", height: 0, overflow: "hidden", borderRadius: "12px", border: "1px solid rgba(255,255,255,0.08)" }}>
                                                                               <iframe
-                                                                                            src="https://www.youtube.com/embed/i1S2vfn3hjY"
+                                                                                            src="https://www.youtube.com/embed/PLXPpLLvBYI"
                                                                                                           title="HBS Case Prep Pipeline — Full Demo"
                                                                                                                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                                                                                                                                       allowFullScreen
