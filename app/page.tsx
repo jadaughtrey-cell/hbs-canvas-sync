@@ -82,11 +82,11 @@ export default function Home() {
           RC MBA 2026 · DSAIL Final Project
         </div>
         <h1 className="text-4xl sm:text-5xl font-black tracking-[-0.04em] leading-[1.08] mb-5">
-          Weekly class prep,<br />
+          HBS Weekly class prep,<br />
           <span className="text-[#a41034]">fully automated.</span>
         </h1>
         <p className="text-[#8892a4] max-w-lg mx-auto text-base leading-[1.75] mb-8">
-          One command Sunday night. By Monday your calendar is renamed, every case file is attached,
+          One command once a week, and your Outlook calendar is renamed, every case file is attached,
           and the week&apos;s assignments are waiting — no manual work.
         </p>
         <div className="flex flex-wrap gap-2.5 justify-center mb-10">
@@ -114,10 +114,10 @@ export default function Home() {
         <div className="max-w-4xl mx-auto">
           <p className="text-[11px] font-bold tracking-widest uppercase text-[#a41034] mb-2">The Pipeline</p>
           <h2 className="text-2xl font-black tracking-tight mb-2">Four steps, zero manual work.</h2>
-          <p className="text-[#8892a4] text-sm mb-8 max-w-md">Every Sunday night, a single command kicks off a ~47-second automated sequence.</p>
+          <p className="text-[#8892a4] text-sm mb-8 max-w-md">Once a week, a single command kicks off a automated sequence.</p>
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
             {[
-              { n:"1", icon:"📡", title:"Canvas Scrape",    body:"Pulls all assignments and case metadata for the week via the Canvas REST API." },
+              { n:"1", icon:"📡", title:"Canvas Scrape + Case Fetch",    body:"Pulls all case metadata for the week via the Canvas REST API." },
               { n:"2", icon:"🤖", title:"AI Analysis",      body:"Claude generates a cheatsheet per case: Q&A, argument map, hidden assumptions — from the actual PDF text." },
               { n:"3", icon:"📅", title:"Outlook Sync",     body:"Every calendar event renamed with full case title. Files attached. Video links in the event body." },
               { n:"4", icon:"☁️", title:"OneDrive Upload",  body:"All cheatsheets and PDFs land in the right OneDrive folder, named and sorted." },
