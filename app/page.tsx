@@ -113,7 +113,6 @@ export default function Home() {
 
       {/* ── HOW IT WORKS ────────────────────────────────────────────── */}
             <PipelineDiagram />
-            import PipelineDiagram from "@/PipelineDiagram";
       <section id="how-it-works" className="pt-16 bg-[#0d1117] border-t border-white/[.06]">
         <div className="max-w-4xl mx-auto">
           <p className="text-[11px] font-bold tracking-widest uppercase text-[#a41034] mb-2">The Pipeline</p>
