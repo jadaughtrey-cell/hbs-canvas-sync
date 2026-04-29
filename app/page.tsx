@@ -112,26 +112,8 @@ export default function Home() {
       </section>
 
       
-      {/* ── CURRENT LIMITATIONS ─────────────────────────────────────── */}
-      <section className="py-10 px-6 bg-[#080b12] border-t border-white/[.06]">
-        <div className="max-w-4xl mx-auto grid sm:grid-cols-2 gap-4">
-          <div className="bg-[#f87171]/[.05] border border-[#f87171]/20 rounded-xl p-4">
-            <p className="text-xs font-bold text-[#ff9999] mb-1">⛔ Outlook Sync — Blocked</p>
-            <p className="text-xs text-[#8892a4] leading-relaxed">
-              HBS IT has not granted <code className="bg-white/10 px-1 rounded text-[11px]">Calendars.ReadWrite</code> access.
-              Requires admin authorization — one IT decision away from running automatically for every enrolled student.
-            </p>
-          </div>
-          <div className="bg-[#fbbf24]/[.05] border border-[#fbbf24]/20 rounded-xl p-4">
-            <p className="text-xs font-bold text-[#fcd05a] mb-1">⚠ OneDrive Upload — HBS Tenant Blocked</p>
-            <p className="text-xs text-[#8892a4] leading-relaxed">
-              HBS OneDrive blocked by the same tenant policy. Personal OneDrive possible but OAuth not yet built.
-              The local Python pipeline uploads directly without this restriction.
-            </p>
-          </div>
-        </div>
-      </section>
-
+            <PipelineDiagram />
+            
             {/* — VIDEO DEMO ————————————————————————————— */}
                   <section id="demo" className="py-16 px-6 bg-[#080b12] border-t border-white/[.06]">
                           <div className="max-w-4xl mx-auto">
