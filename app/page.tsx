@@ -11,7 +11,7 @@ const LOADING_STEPS = [
   "Scanning assignments…",
   "Filtering by date range…",
   "Almost there…",
-];h
+];
 
 export default function Home() {
   const [assignments, setAssignments] = useState<CanvasAssignment[] | null>(null);
