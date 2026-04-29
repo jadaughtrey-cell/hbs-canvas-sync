@@ -1,4 +1,4 @@
-↗"use client";
+"use client";
 import { useState, useEffect, useRef } from "react";
 import SetupForm from "@/components/SetupForm";
 import AssignmentList from "@/components/AssignmentList";
@@ -49,7 +49,7 @@ export default function Home() {
         body: JSON.stringify({ token: canvasToken, canvasUrl: url, startDate, endDate }),
       });
       const data = await res.json();
-      if (!res.ok) throw new Error(data.error || "Failed to fetch assignments");
+      if (!res.ok) throw new Error(data.error || "Failed to Fetch Canvas Metadata (Demo)");
       setAssignments(data.assignments);
       setTimeout(() => fetchRef.current?.scrollIntoView({ behavior: "smooth" }), 100);
     } catch (e: unknown) {
@@ -70,10 +70,10 @@ export default function Home() {
           <span className="text-[#a41034]">HBS</span> Canvas Sync
         </div>
         <div className="flex gap-5 ml-auto items-center">
-          <a href="#how-it-works" className="text-xs font-medium text-[#8892a4] hover:text-white transition-colors hidden sm:block">How it works</a>
+          <a href="#demo" className="text-xs font-medium text-[#8892a4] hover:text-white transition-colors hidden sm:block">How it works</a>
           <a href="#calendar"     className="text-xs font-medium text-[#8892a4] hover:text-white transition-colors hidden sm:block">Calendar viz</a>
           <a href="#fetch"        className="text-xs font-bold bg-[#a41034] hover:bg-[#7a0c26] text-white px-3 py-1.5 rounded-lg transition-colors">
-            Fetch Assignments
+            Fetch Canvas Metadata (Demo)
           </a>
         </div>
       </nav>
@@ -101,15 +101,7 @@ export default function Home() {
             }`}>{p}</span>
           ))}
         </div>
-        <div className="flex gap-3 justify-center flex-wrap">
-          <a href="#fetch" className="bg-[#a41034] hover:bg-[#7a0c26] text-white font-bold text-sm px-6 py-3 rounded-xl transition-colors">
-            Fetch This Week&apos;s Assignments →
-          </a>
-          <a href="#calendar" className="border border-white/15 hover:border-white/30 text-[#8892a4] hover:text-white font-semibold text-sm px-6 py-3 rounded-xl transition-colors">
-            See Calendar Before / After
-          </a>
-        </div>
-      </section>
+        section>
 
       
             <PipelineDiagram />
@@ -132,7 +124,7 @@ export default function Home() {
                                                                                                                                                                                   </div>
                                                                                                                                                                                         </section>
                                                                                                                                                                                         
-      {/* ── CALENDAR VIZ ────────────────────────────────────────────── */}
+      {/* ──             <a href="https://youtu.be/PLXPpLLvBYI" target="_blank" rel="noopener" className="text-xs font-medium text-[#8892a4] hover:text-white transition-colors hidden sm:block">Full Demo ↗</a> ────────────────────────────────────────────── */}
       <section id="calendar" className="py-16 px-6 bg-[#0d1117] border-t border-white/[.06]">
         <div className="max-w-4xl mx-auto">
           <p className="text-[11px] font-bold tracking-widest uppercase text-[#a41034] mb-2">The Transformation</p>
@@ -148,7 +140,7 @@ export default function Home() {
           </div>
       </section>
 
-      {/* ── FETCH ASSIGNMENTS ───────────────────────────────────────── */}
+      {/* ── Fetch Canvas Metadata (Demo) ───────────────────────────────────────── */}
       <section id="fetch" ref={fetchRef as React.RefObject<HTMLElement>} className="py-16 px-6 bg-[#080b12] border-t border-white/[.06]">
         <div className="max-w-4xl mx-auto">
           <p className="text-[11px] font-bold tracking-widest uppercase text-[#a41034] mb-2">Live Canvas Fetch</p>
@@ -186,7 +178,7 @@ export default function Home() {
               {!loading && !assignments && !error && (
                 <div className="bg-[#1a2236] border border-white/10 rounded-2xl p-10 text-center text-[#8892a4]">
                   <div className="text-4xl mb-3">📡</div>
-                  <p className="text-sm">Enter your token and dates, then click <strong className="text-white">Fetch Assignments</strong>.</p>
+                  <p className="text-sm">Enter your token and dates, then click <strong className="text-white">Fetch Canvas Metadata (Demo)</strong>.</p>
                 </div>
               )}
             </div>
