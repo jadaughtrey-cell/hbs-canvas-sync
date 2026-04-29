@@ -194,7 +194,7 @@ export default function PipelineDiagram() {
           <div className="pd-intent-icon">🌐</div>
           <div>
             <div className="pd-intent-label">The Intended Architecture</div>
-            <div className="pd-intent-desc">A hosted web app — any HBS RC student enters their Canvas token, hits a button Sunday night, and all scripts run on a server. Outlook Calendar updated with case name, case file(s), AI cheatsheets, and answers to discussion questions generated and attached to each Outlook event.</div>
+            <div className="pd-intent-desc">A hosted web app — any HBS student enters their Canvas token, hits a button once per week, and all scripts run on a server, Outlook calendar updates with case name, case file(s), AI cheatsheets, and answers to discussion questions as attachments for each class.</div>
             <div className="pd-intent-sub">This is what hbs-canvas-sync.vercel.app was meant to be: a full pipeline host, not just a demo site.</div>
           </div>
         </div>
