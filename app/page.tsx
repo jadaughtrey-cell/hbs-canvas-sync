@@ -1,4 +1,4 @@
-"use client";
+↗"use client";
 import { useState, useEffect, useRef } from "react";
 import SetupForm from "@/components/SetupForm";
 import AssignmentList from "@/components/AssignmentList";
