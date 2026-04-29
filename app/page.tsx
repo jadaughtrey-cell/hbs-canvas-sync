@@ -130,7 +130,7 @@ export default function Home() {
         <div className="max-w-4xl mx-auto">
           <p className="text-[11px] font-bold tracking-widest uppercase text-[#a41034] mb-2">The Transformation</p>
           <h2 className="text-2xl font-black tracking-tight mb-2">Before and after, side by side.</h2>
-          <p className="text-[#8892a4] text-sm mb-6">Toggle between your raw HBS calendar and what the pipeline produces every Sunday night.</p>
+          <p className="text-[#8892a4] text-sm mb-6">Toggle between your raw HBS calendar and what the pipeline produces.</p>
         </div>
         <div style={{ height: "1900px", display: "block" }}>
             <iframe
