@@ -111,31 +111,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ── HOW IT WORKS ────────────────────────────────────────────── */}
-            <PipelineDiagram />
-      <section id="how-it-works" className="pt-16 bg-[#0d1117] border-t border-white/[.06]">
-        <div className="max-w-4xl mx-auto">
-          <p className="text-[11px] font-bold tracking-widest uppercase text-[#a41034] mb-2">The Pipeline</p>
-          <h2 className="text-2xl font-black tracking-tight mb-2">Four steps, zero manual work.</h2>
-          <p className="text-[#8892a4] text-sm mb-8 max-w-md">Once a week, a single command kicks off a automated sequence.</p>
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-            {[
-              { n:"1", icon:"📡", title:"Canvas Scrape + Case Fetch",    body:"Pulls all case metadata for the week via the Canvas REST API." },
-              { n:"2", icon:"🤖", title:"AI Analysis",      body:"Claude generates a cheatsheet per case: Q&A, argument map, hidden assumptions — from the actual PDF text." },
-              { n:"3", icon:"📅", title:"Outlook Sync",     body:"Every calendar event renamed with full case title. Files attached. Video links in the event body." },
-              { n:"4", icon:"☁️", title:"OneDrive Upload",  body:"All cheatsheets and PDFs land in the right OneDrive folder, named and sorted." },
-            ].map(s => (
-              <div key={s.n} className="bg-[#1a2236] border border-white/[.08] rounded-2xl p-4">
-                <p className="text-[10px] font-black uppercase tracking-wider text-[#a41034] mb-2">Step {s.n}</p>
-                <div className="text-2xl mb-2">{s.icon}</div>
-                <h3 className="text-sm font-bold mb-1">{s.title}</h3>
-                <p className="text-xs text-[#8892a4] leading-relaxed">{s.body}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
+      
       {/* ── CURRENT LIMITATIONS ─────────────────────────────────────── */}
       <section className="py-10 px-6 bg-[#080b12] border-t border-white/[.06]">
         <div className="max-w-4xl mx-auto grid sm:grid-cols-2 gap-4">
