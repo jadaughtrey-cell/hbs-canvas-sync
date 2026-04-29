@@ -2,6 +2,7 @@
 import { useState, useEffect, useRef } from "react";
 import SetupForm from "@/components/SetupForm";
 import AssignmentList from "@/components/AssignmentList";
+
 import type { CanvasAssignment } from "@/lib/types";
 
 const LOADING_STEPS = [
