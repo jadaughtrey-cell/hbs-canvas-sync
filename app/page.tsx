@@ -112,7 +112,7 @@ export default function Home() {
                           <div className="max-w-4xl mx-auto">
                                     <p className="text-[11px] font-bold tracking-widest uppercase text-[#a41034] mb-2">Live Demo</p>
                                               <h2 className="text-2xl font-black tracking-tight mb-2">See it run, start to finish.</h2>
-                                                        <p className="text-[#8892a4] text-sm mb-8">Full pipeline walkthrough recorded live — Canvas scrape through Outlook sync. 14 minutes.</p>
+                                                        <p className="text-[#8892a4] text-sm mb-8">Full pipeline walkthrough recorded live — Canvas scrape through Outlook sync. Recommend viewing at 1080p and 2x playback speed. </p>
                                                                   <div style={{ position: "relative", paddingBottom: "56.25%", height: 0, overflow: "hidden", borderRadius: "12px", border: "1px solid rgba(255,255,255,0.08)" }}>
                                                                               <iframe
                                                                                             src="https://www.youtube.com/embed/PLXPpLLvBYI"
