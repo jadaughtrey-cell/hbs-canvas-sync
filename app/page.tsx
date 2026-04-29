@@ -110,7 +110,7 @@ export default function Home() {
       </section>
 
       {/* ── HOW IT WORKS ────────────────────────────────────────────── */}
-      <PipelineDiagram /><section id="how-it-works" style={{display:"none"}} className="pt-16 bg-[#0d1117] border-t border-white/[.06]">
+      <section id="how-it-works" className="pt-16 bg-[#0d1117] border-t border-white/[.06]">
         <div className="max-w-4xl mx-auto">
           <p className="text-[11px] font-bold tracking-widest uppercase text-[#a41034] mb-2">The Pipeline</p>
           <h2 className="text-2xl font-black tracking-tight mb-2">Four steps, zero manual work.</h2>
