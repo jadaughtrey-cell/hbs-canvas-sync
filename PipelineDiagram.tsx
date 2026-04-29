@@ -138,6 +138,16 @@ export default function PipelineDiagram() {
           <div className="pd-section-line" />
         </div>
 
+        {/* Intended Architecture */}
+        <div className="pd-intent-bar">
+          <div className="pd-intent-icon">🌐</div>
+          <div>
+            <div className="pd-intent-label">The Intended Architecture</div>
+            <div className="pd-intent-desc">A hosted web app — any HBS student enters their Canvas token, hits a button once per week, and all scripts run on a server, Outlook calendar updates with case name, case file(s), AI cheatsheets, and answers to discussion questions as attachments for each class.</div>
+            <div className="pd-intent-sub">This is what hbs-canvas-sync.vercel.app was meant to be: a full pipeline host, not just a demo site.</div>
+          </div>
+        </div>
+
         <div className="pd-flow-wrap" id="pd-flow-built">
           <svg id="pd-svg-built" />
           <div className="pd-badge-row">
@@ -186,16 +196,6 @@ export default function PipelineDiagram() {
             <div className="pd-built-title">Outlook Sync</div>
             <div className="pd-built-script">outlook_sync.py</div>
             <div className="pd-built-desc">Renames calendar events, attaches case files &amp; cheatsheets, embeds discussion questions via Microsoft Graph API</div>
-          </div>
-        </div>
-
-        {/* Intended Architecture */}
-        <div className="pd-intent-bar">
-          <div className="pd-intent-icon">🌐</div>
-          <div>
-            <div className="pd-intent-label">The Intended Architecture</div>
-            <div className="pd-intent-desc">A hosted web app — any HBS student enters their Canvas token, hits a button once per week, and all scripts run on a server, Outlook calendar updates with case name, case file(s), AI cheatsheets, and answers to discussion questions as attachments for each class.</div>
-            <div className="pd-intent-sub">This is what hbs-canvas-sync.vercel.app was meant to be: a full pipeline host, not just a demo site.</div>
           </div>
         </div>
 
