@@ -70,8 +70,9 @@ export default function Home() {
           <span className="text-[#a41034]">HBS</span> Canvas Sync
         </div>
         <div className="flex gap-5 ml-auto items-center">
-          <a href="#demo" className="text-xs font-medium text-[#8892a4] hover:text-white transition-colors hidden sm:block">How it works</a>
+          <a href="#demo" className="text-xs font-medium text-[#8892a4] hover:text-white transition-colors hidden sm:block">Watch Demo</a>
           <a href="#calendar"     className="text-xs font-medium text-[#8892a4] hover:text-white transition-colors hidden sm:block">Calendar viz</a>
+          <a href="https://youtu.be/PLXPpLLvBYI" target="_blank" rel="noopener" className="text-xs font-medium text-[#8892a4] hover:text-white transition-colors hidden sm:block">Full Demo</a>
           <a href="#fetch"        className="text-xs font-bold bg-[#a41034] hover:bg-[#7a0c26] text-white px-3 py-1.5 rounded-lg transition-colors">
             Fetch Canvas Metadata (Demo)
           </a>
@@ -101,7 +102,7 @@ export default function Home() {
             }`}>{p}</span>
           ))}
         </div>
-        section>
+        </section>
 
       
             <PipelineDiagram />
@@ -124,7 +125,7 @@ export default function Home() {
                                                                                                                                                                                   </div>
                                                                                                                                                                                         </section>
                                                                                                                                                                                         
-      {/* ──             <a href="https://youtu.be/PLXPpLLvBYI" target="_blank" rel="noopener" className="text-xs font-medium text-[#8892a4] hover:text-white transition-colors hidden sm:block">Full Demo ↗</a> ────────────────────────────────────────────── */}
+      {/* ── CALENDAR VIZ ──────────────────────────────────────────── */}
       <section id="calendar" className="py-16 px-6 bg-[#0d1117] border-t border-white/[.06]">
         <div className="max-w-4xl mx-auto">
           <p className="text-[11px] font-bold tracking-widest uppercase text-[#a41034] mb-2">The Transformation</p>
